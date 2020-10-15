@@ -30,14 +30,13 @@ jobs:
         export PATH=$ROOTSYS/bin:$PATH
         export LD_LIBRARY_PATH=$ROOTSYS/lib:$LD_LIBRARY_PATH
         Rscript xps.R
-     - name: Pack Up
-       run: |
-         tar -I zstd -cf xps.tar.zst /home/runner/work/root/R/library/
-     - name: Upload Binaries to Release
-       uses: svenstaro/upload-release-action@v2
-       with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /home/runner/work/root/xps.tar.zst
-          tag: v1.48.0
-          overwrite: true
-          file_glob: true
+    - name: Pack Up
+      run: tar -I zstd -cf xps.tar.zst /home/runner/work/root/R/library/
+    - name: Upload Binaries to Release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: /home/runner/work/root/xps.tar.zst
+        tag: v1.48.0
+        overwrite: true
+        file_glob: true
