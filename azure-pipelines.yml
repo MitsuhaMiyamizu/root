@@ -12,7 +12,20 @@ pool:
 steps:
 
 - script: |
+    export ROOTSYS=${pwd}
+    export PATH=$ROOTSYS/bin:$PATH
+    export LD_LIBRARY_PATH=$ROOTSYS/lib:$LD_LIBRARY_PATH
+    cat mirror.txt | sudo tee /etc/apt/sources.list
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+    sudo apt-get update && sudo apt-get install r-base
+  displayName: 'Install R 4.0.x'
+- script: |
     sudo apt-get update && sudo apt-get install git build-essential dpkg-dev make g++ gcc binutils libx11-dev libxpm-dev libxft-dev libxext-dev gfortran libssl-dev libpcre3-dev xlibmesa-glu-dev libglew1.5-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev python-dev libxml2-dev libkrb5-dev libgsl0-dev libqt4-dev
+  displayName: 'Install Dependencies'
+- script: |
     export ROOTSYS=${pwd}
     ./configure && make
-  displayName: 'Run a multi-line script'
+  displayName: 'Start Compile'
+- script: |
+    Rscript xps.R
+  displayName: 'Install xps' 
