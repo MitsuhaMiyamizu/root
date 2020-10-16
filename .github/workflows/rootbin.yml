@@ -41,7 +41,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: /home/runner/work/root/xps.tar.zst
+        file: /home/runner/work/root/root/xps.tar.zst
         tag: v1.48.0
         overwrite: true
         file_glob: true
