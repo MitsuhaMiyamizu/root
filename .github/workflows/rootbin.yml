@@ -37,13 +37,18 @@ jobs:
         Rscript xps.R
     - name: Pack Up
       run: |
-        cd ..
-        tar -I zstd -cf xps.tar.zst ./R/library/
+        cd /home/runner/work/root/
+        tar -I zstd -cf xps.tar.zst ./R/
+        tar -I zstd -cf root.tar.zst ./root/
+        mkdir mixed
+        mv xps.tar.zst ./mixed/
+        mv root.tar.zst ./mixed/
+        tar -I zstd -cf mixed.tar.zst ./mixed/
     - name: Upload Binaries to Release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: /home/runner/work/root/root/xps.tar.zst
+        file: /home/runner/work/root/mixed.tar.zst
         tag: v1.48.0
         overwrite: true
         file_glob: true
