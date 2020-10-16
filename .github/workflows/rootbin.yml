@@ -36,7 +36,9 @@ jobs:
         source ./bin/thisroot.sh
         Rscript xps.R
     - name: Pack Up
-      run: tar -I zstd -cf xps.tar.zst /home/runner/work/root/R/library/
+      run: |
+        cd ..
+        tar -I zstd -cf xps.tar.zst ./R/library/
     - name: Upload Binaries to Release
       uses: svenstaro/upload-release-action@v2
       with:
